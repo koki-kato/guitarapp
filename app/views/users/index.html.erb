@@ -1,0 +1,27 @@
+<% provide(:title, 'All Users') %>
+<% provide(:class_text, 'user--edit') %>
+<% provide(:button_text, '更新') %>
+<h1>ユーザー一覧</h1>
+
+<div class="col-md-10 col-md-offset-1">
+  
+  <%= will_paginate %>
+  <table class="table-frame table-margin table-block">
+  <% @users.each do |user| %>
+    <tr>
+      <td>
+        
+          <% if current_user.admin? && !current_user?(user) %>
+          <%= user.name %><br>
+          <%= button_to "削除", user, method: :delete,
+                                    data: { confirm: "削除してもよろしいですか？" },
+                                    class: "btn btn-primary btn-default" %><br>
+          
+          <% end %>
+        
+      </td>
+    </tr>
+  <% end %>
+  </table>
+  <%= will_paginate %>
+</div>

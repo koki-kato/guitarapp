@@ -1,0 +1,5 @@
+<%= form_with(model: @beat, local: true) do |f| %>
+  <%= f.label :lyric, class: "label-#{yield(:class_text)}" %>
+  <%= f.text_field :lyric, class: "form-control" %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+<% end %>

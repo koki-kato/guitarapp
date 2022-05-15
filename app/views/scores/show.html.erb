@@ -1,0 +1,31 @@
+<% provide(:title, @score.title) %>
+<h1><%= @score.title %></h1>
+  <div>
+  <table class="table table-bordered table-condensed score-table">
+  </table>
+  </div>
+  <div>
+  <table class="table table-bordered table-condensed table-hover" id="table-beats">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>歌詞</th>
+        <th>コード</th>
+        <th>編集</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @beats.each do |beat| %>
+        <tr>
+          <td><%= beat.id %></td>
+          <td><%= beat.lyric %></td>
+          <td><%= beat.image_name %>　
+              <% unless beat.image_name == nil %>
+              <%= image_tag "/#{beat.image_name}.png" %>
+              <% end %></td>
+          <td><%= link_to "設定", edit_score_beat_path(beat),class: "btn btn-lg btn-primary" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
