@@ -1,10 +1,4 @@
-class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[line]
-  
+class User < ApplicationRecord  
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
@@ -94,29 +88,29 @@ class User < ApplicationRecord
     ["title", "user_id"]
   end
 
-# 以下　line用
+# # 以下　line用
 
-def social_profile(provider)
-  social_profiles.select { |sp| sp.provider == provider.to_s }.first
-end
+# def social_profile(provider)
+#   social_profiles.select { |sp| sp.provider == provider.to_s }.first
+# end
 
-def set_values(omniauth)
-  return if provider.to_s != omniauth["provider"].to_s || uid != omniauth["uid"]
-  credentials = omniauth["credentials"]
-  info = omniauth["info"]
+# def set_values(omniauth)
+#   return if provider.to_s != omniauth["provider"].to_s || uid != omniauth["uid"]
+#   credentials = omniauth["credentials"]
+#   info = omniauth["info"]
 
-  access_token = credentials["refresh_token"]
-  access_secret = credentials["secret"]
-  credentials = credentials.to_json
-  name = info["name"]
-  # self.set_values_by_raw_info(omniauth['extra']['raw_info'])
-end
+#   access_token = credentials["refresh_token"]
+#   access_secret = credentials["secret"]
+#   credentials = credentials.to_json
+#   name = info["name"]
+#   # self.set_values_by_raw_info(omniauth['extra']['raw_info'])
+# end
 
-def set_values_by_raw_info(raw_info)
-  self.raw_info = raw_info.to_json
-  self.save!
-end
+# def set_values_by_raw_info(raw_info)
+#   self.raw_info = raw_info.to_json
+#   self.save!
+# end
 
-# 以上 line用
+# # 以上 line用
 
 end

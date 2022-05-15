@@ -9,10 +9,10 @@ gem 'bcrypt'
 gem 'faker'
 gem 'roo'
 gem 'rounding'
-gem 'devise' # LINEログイン用
-gem 'omniauth-line' # LINEログイン用
-gem 'omniauth-rails_csrf_protection' # LINEログイン用
-gem 'dotenv-rails' # LINEログイン用
+# gem 'devise' # LINEログイン用
+# gem 'omniauth-line' # LINEログイン用
+# gem 'omniauth-rails_csrf_protection' # LINEログイン用
+# gem 'dotenv-rails' # LINEログイン用
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
