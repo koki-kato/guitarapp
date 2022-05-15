@@ -1,15 +1,16 @@
 class User < ApplicationRecord  
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token
-  before_save { self.email = email.downcase }
+  # before_save { self.email = email.downcase }
+  before_save :email_downcase, unless: :uid?
 
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, unless: :uid?, length: { maximum: 50 }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, length: { maximum: 100 },
+  validates :email, presence: true, unless: :uid?, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  has_secure_password
+  has_secure_password validations: false
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   # 渡された文字列のハッシュ値を返します。
@@ -112,5 +113,21 @@ class User < ApplicationRecord
 # end
 
 # # 以上 line用
+
+def self.find_or_create_from_auth(auth)
+  provider = auth[:provider]
+  uid = auth[:uid]
+  name = auth[:info][:name]
+  image = auth[:info][:image]
+
+  self.find_or_create_by(provider: provider, uid: uid) do |user|
+    user.name = name
+    user.image_url = image
+  end
+end
+
+def email_downcase
+  self.email.downcase!
+end
 
 end

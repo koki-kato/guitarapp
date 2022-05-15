@@ -12,7 +12,9 @@ gem 'rounding'
 # gem 'devise' # LINEログイン用
 # gem 'omniauth-line' # LINEログイン用
 # gem 'omniauth-rails_csrf_protection' # LINEログイン用
-# gem 'dotenv-rails' # LINEログイン用
+gem 'omniauth'
+gem 'omniauth-twitter' #twitter用
+gem 'dotenv-rails' #外部連携用
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

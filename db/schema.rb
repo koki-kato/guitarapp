@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 2022_05_14_052746) do
     t.string "password_digest"
     t.string "remember_digest"
     t.boolean "admin", default: false
+    t.string "provider"
+    t.string "uid"
+    t.string "image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
