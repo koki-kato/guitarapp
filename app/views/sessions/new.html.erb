@@ -26,6 +26,8 @@
       ユーザー登録がまだの場合は<%= link_to "こちら", signup_path %>
     </p>
     <%# <%= link_to("Lineログイン", user_line_omniauth_authorize_path,{class: "btn btn-primary btn-block btn-login"}) %>
-    <%= link_to "Twitterアカウントでログイン", "/auth/twitter" %>
+    <%= link_to '/auth/twitter', class: 'btn btn-block btn-primary' %>
+    <%= link_to "Connect Twitter", "/auth/twitter", method: :post, class: "btn btn-primary" %>
+    <%= button_to "Connect Twitter", "/auth/twitter", method: :post, class: "btn btn-primary" %>
   </div>
 </div>
