@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if @user.save
       log_in @user
       flash[:success] = '新規作成に成功しました。'
-      redirect_to @user
+      redirect_to root_url
     else
       render :new
     end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to @user
+      redirect_to root_url
     else
       render :edit      
     end
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     flash[:success] = "#{@user.name}のデータを削除しました。"
-    redirect_to users_url
+    redirect_to root_url
   end
 
  
@@ -50,11 +50,11 @@ class UsersController < ApplicationController
   def import
     if params[:file].blank?
       flash[:danger] = "ファイルを選択してください"
-      redirect_to users_url 
+      redirect_to root_url
     else 
       User.import(params[:file])
       flash[:success] = "アカウント情報を追加しました。"
-      redirect_to users_url
+      redirect_to root_url
     end
   end
   
