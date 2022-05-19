@@ -12,11 +12,14 @@
       <td>
         
           <% if current_user.admin? && !current_user?(user) %>
-          <%= user.name %><br>
-          <%= button_to "削除", user, method: :delete,
+            <% unless user.name == "ゲストユーザー" %>
+            <%= user.name %><br>
+            
+            <%= button_to "削除", user, method: :delete,
                                     data: { confirm: "削除してもよろしいですか？" },
                                     class: "btn btn-primary btn-default" %><br>
-          
+                                 
+            <% end %>
           <% end %>
         
       </td>

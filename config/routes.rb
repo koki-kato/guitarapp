@@ -11,15 +11,21 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  # google
+  post '/auth/:provider/callback', to: 'sessions#create'
+  get 'auth/signout' => 'sessions#destroy'
   get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'log_out', to: 'sessions#destroy', as: 'log_out'
+
+  #ゲスト
+  post 'guest_login', to: "guest_sessions#create"
 
   resources :users do
     collection {post :import}
+    resources :scores do
+      resources :beats
+    end
   end
-
-  resources :scores do
-    resources :beats
-  end
-
 
 end

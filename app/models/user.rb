@@ -1,4 +1,5 @@
 class User < ApplicationRecord  
+  has_many :scores, dependent: :destroy
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token
   # before_save { self.email = email.downcase }
@@ -114,17 +115,22 @@ class User < ApplicationRecord
 
 # # 以上 line用
 
-def self.find_or_create_from_auth_hash(auth_hash)
-  uid = auth_hash[:uid]
-  nickname = auth_hash[:info][:nickname]
-  name = auth_hash[:info][:name]
-  image = auth_hash[:info][:image]
-  # find_or_create_by()は()の中の条件のものが見つければ取得し、なければ新しく作成するというメソッド
-  find_or_create_by(uid: uid) do |user|
-    user.uid = uid
-    user.nickname = nickname
-    user.name = name
-    user.image = image
+class << self
+  def find_or_create_from_auth_hash(auth_hash)
+    user_params = user_params_from_auth_hash(auth_hash)
+    find_or_create_by(email: user_params[:email]) do |user|
+      user.update(user_params)
+    end
+  end
+  
+  private
+
+  def user_params_from_auth_hash(auth_hash)
+    {
+      name: auth_hash.info.name,
+      email: auth_hash.info.email,
+      # image: auth_hash.info.image,
+    }
   end
 end
 

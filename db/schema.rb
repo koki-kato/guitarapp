@@ -22,9 +22,13 @@ ActiveRecord::Schema.define(version: 2022_05_14_052746) do
   end
 
   create_table "scores", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "title"
+    t.string "artist"
+    t.string "capo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_scores_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
@@ -41,4 +45,5 @@ ActiveRecord::Schema.define(version: 2022_05_14_052746) do
   end
 
   add_foreign_key "beats", "scores"
+  add_foreign_key "scores", "users"
 end

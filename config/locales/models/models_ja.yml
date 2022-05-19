@@ -2,8 +2,8 @@ ja:
   activerecord:
     models:
       user: ユーザー
-      attendance: 勤怠
-      base: 拠点
+      score: 楽譜
+      beat: 拍子
     attributes:
         user:
           id: ID
@@ -22,17 +22,10 @@ ja:
           password_confirmation: パスワード再入力
           created_at: 作成日
           updated_at: 更新日
-        attendance:
-          worked_on: 日付
-          started_at: 出勤時間
-          finished_at: 退勤時間
-          note: 備考
-          user: ユーザーID
-          scheduled_end_time: 終了予定時間
-          next_day: 翌日
-          business_process: 業務処理内容
-          confirmation: 指示者確認㊞
-        base:
-          name: 拠点名
-          kind: 拠点種類
-          number: 拠点番号
+        score:
+          title: 曲名
+          artist: アーティスト
+          capo: カポ
+        beat:
+          lyric: 歌詞
+          image_name: コード

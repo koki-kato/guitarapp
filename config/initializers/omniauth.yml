@@ -1,0 +1,4 @@
+production: &production
+  twitter:
+    key: 8e4446715d49709fd395
+    secret: e1421249d895a78330a79c55c84029fe23b652da

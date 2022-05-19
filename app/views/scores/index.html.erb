@@ -3,34 +3,34 @@
 <% provide(:button_text, '更新') %>
 <h1>楽譜一覧</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
 
-  <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+
+  <table class="table table-bordered table-condensed table-hover" id="table-beats">
     <thead>
       <tr>
         <th></th>
         <th></th>
         <th>曲名</th>
         <th>アーティスト</th>
-        <th>製作者</th>
-        <th>閲覧</th>
+        <th>詳細</th>
       </tr>
     </thead>
       <% @scores.each do |score| %>
         <tr>
-          <td><%= link_to "修正", edit_score_path(score), class: "btn btn-lg btn-success" %></td>
-          <td><%= link_to "削除", score_path(score), method: :delete, class: "btn btn-lg btn-danger" %></td>
+        <% if current_user.id == score.user_id %>
+          <td><%= link_to "修正", edit_user_score_path(id: score.id), class: "btn btn-lg btn-success" %></td>
+          <td><%= link_to "削除", user_score_path(id: score.id), method: :delete, class: "btn btn-lg btn-danger" %></td>
+        <% else %>
+          <td></td>
+          <td></td>
+        <% end %> 
           <td><%= score.title %></td>
-          <td></td>
-          <td></td>
-          <td><%= link_to "GO", score_path(score), class: "btn btn-lg btn-success" %></td>
+          <td><%= score.artist %></td>
+          <td><%= link_to "閲覧", user_score_path(id: score.id, create_id: score.user_id), class: "btn btn-lg btn-warning" %></td>
         </tr>
-        <% end %>
+      <% end %>
   </table>
 
-  <%= link_to "新規作成", new_score_path, class: "btn btn-lg btn-primary" %>
+  <%= link_to "新規作成", new_user_score_path, class: "btn btn-lg btn-primary" %>
 
 
-  </div>
-</div>

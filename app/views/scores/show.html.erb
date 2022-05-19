@@ -1,5 +1,7 @@
 <% provide(:title, @score.title) %>
 <h1><%= @score.title %></h1>
+<p>アーティスト：<%= @score.artist %></p>
+<p>カポ：<%= @score.capo %></p>
   <div>
   <table class="table table-bordered table-condensed score-table">
   </table>
@@ -8,7 +10,7 @@
   <table class="table table-bordered table-condensed table-hover" id="table-beats">
     <thead>
       <tr>
-        <th>ID</th>
+        <th>拍子</th>
         <th>歌詞</th>
         <th>コード</th>
         <th>編集</th>
@@ -17,13 +19,17 @@
     <tbody>
       <% @beats.each do |beat| %>
         <tr>
-          <td><%= beat.id %></td>
+          <td><%= @i += 1 %></td>
           <td><%= beat.lyric %></td>
           <td><%= beat.image_name %>　
               <% unless beat.image_name == nil %>
               <%= image_tag "/#{beat.image_name}.png" %>
               <% end %></td>
-          <td><%= link_to "設定", edit_score_beat_path(beat),class: "btn btn-lg btn-primary" %></td>
+        <% if @score.user_id == current_user.id %>      
+          <td><%= link_to "設定", edit_user_score_beat_path(user_id: params[:user_id], score_id: beat.score_id, id: beat.id), class: "btn btn-lg btn-primary" %></td>
+        <% else %>
+          <td></td>
+        <% end %>
         </tr>
       <% end %>
     </tbody>

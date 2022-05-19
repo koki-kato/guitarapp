@@ -60,4 +60,12 @@ module SessionsHelper
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
   end
+
+  # google用
+  # def current_user
+  #   return unless (user_id = session[:user_id])
+
+  #   @current_user ||= User.find_by(id: user_id)
+  # end
+  
 end

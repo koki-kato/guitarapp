@@ -4,11 +4,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    auth = request.env['omniauth.auth']
-    if auth.present?
-      user = User.find_or_create_from_auth(request.env['omniauth.auth'])
-      session[:user_id] = user.id
-      redirect_to user
+    unless params[:commit] == "ログイン"
+      (user = User.find_or_create_from_auth_hash(auth_hash))
+      log_in user
+      redirect_to root_path
     else
       user = User.find_by(email: params[:session][:email].downcase)
       if user && user.authenticate(params[:session][:password])
@@ -17,7 +16,7 @@ class SessionsController < ApplicationController
         if current_user.admin == true
           redirect_back_or root_url
         else
-          redirect_back_or user
+          redirect_back_or root_url
         end
       else
         flash.now[:danger] = '認証に失敗しました。'
@@ -33,4 +32,11 @@ class SessionsController < ApplicationController
     flash[:success] = 'ログアウトしました。'
     redirect_to root_url
   end
+
+  private
+
+  def auth_hash
+    request.env['omniauth.auth']
+  end
+
 end

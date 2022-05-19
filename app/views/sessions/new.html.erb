@@ -1,12 +1,12 @@
 <% provide(:title, "login") %>
+<div class="mx-auto" style="width: 500px;">
 <h1>ログイン</h1><br>
   <h2>管理者：sample@email.com<br>
       一般-1：sample-1@email.com<br>
       一般-2：sample-2@email.com<br><br>
   パスワード(共通)：password<br></h2>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+
     <%= form_with(scope: :session, url: login_path, local: true) do |f| %>
 
       <%= f.label :email, "メールアドレス", class: "label-login" %>
@@ -25,9 +25,7 @@
     <p>
       ユーザー登録がまだの場合は<%= link_to "こちら", signup_path %>
     </p>
-    <%# <%= link_to("Lineログイン", user_line_omniauth_authorize_path,{class: "btn btn-primary btn-block btn-login"}) %>
-    <%= link_to '/auth/twitter', class: 'btn btn-block btn-primary' %>
-    <%= link_to "Connect Twitter", "/auth/twitter", method: :post, class: "btn btn-primary" %>
-    <%= button_to "Connect Twitter", "/auth/twitter", method: :post, class: "btn btn-primary" %>
-  </div>
+    <%= button_to "Googleでログイン", "/auth/google_oauth2", method: :post, class: "btn btn-warning btn-block btn-login"  %>
+    <%= button_to "ゲストログイン", guest_login_path, method: :post, class: "btn btn-success btn-block btn-login" %>
+
 </div>

@@ -7,29 +7,36 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
+      <% unless logged_in? %>
         <%= link_to("ログイン", login_path,{class: "nav-link"}) %>
-      </li>
-      <li class="nav-item">
-        <%= link_to("楽譜一覧", scores_path,{class: "nav-link"}) %>
+      <% end %>
       </li>
       <% if logged_in? %>
+      <li class="nav-item">
+        <%= link_to("楽譜一覧", user_scores_path(current_user.id),{class: "nav-link"}) %>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          ユーザー
+        ユーザー
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <% if current_user.admin? %>
           <%= link_to("一覧", users_path,{class: "dropdown-item"}) %>
+        <% end %>
+        <% unless current_user.name == "ゲストユーザー" %>
           <%= link_to("設定", edit_user_path(current_user),{class: "dropdown-item"}) %>
+        <% end %>
           <div class="dropdown-divider"></div>
           <%= link_to("ログアウト", logout_path, { method: :delete, data: {confirm: "ログアウトしますか？"}, class: "dropdown-item"}) %>
         </div>
       </li>
-        <% end %>
+        
       
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><%= current_user.name %></a>
       </li>
     </ul>
+    <% end %>
     <form class="form-inline my-2 my-lg-0">
       
     </form>
