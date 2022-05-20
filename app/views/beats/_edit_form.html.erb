@@ -2,6 +2,6 @@
   <%= f.label :lyric, class: "label-#{yield(:class_text)}" %>
   <%= f.text_field :lyric, class: "form-control" %>
   <%= f.label :image_name, class: "label-#{yield(:class_text)}" %>
-  <%= f.select :image_name, [["選択してください","選択してください"],["Am7","Am7"],["C","C"],["C7","C7"],["E7","E7"],["E7onG#","E7onG#"],["Em7","Em7"],["F","F"],["G","G"],["Gm7","Gm7"]], class: "form-control" %>
+  <%= f.select :image_name, [["選択してください","選択してください"],["Am7","Am7"],["C","C"],["C7","C7"],["E7","E7"],["E7onA♭","E7onA♭"],["Em7","Em7"],["F","F"],["G","G"],["Gm7","Gm7"]], class: "form-control" %>
   <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
 <% end %>
