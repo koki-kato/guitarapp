@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :email, presence: true, unless: :uid?, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  has_secure_password validations: false
+  has_secure_password unless: :uid?
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, confirmation: true
 
   # 渡された文字列のハッシュ値を返します。
