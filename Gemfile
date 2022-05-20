@@ -21,6 +21,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem "sprockets-rails"
 gem 'mysql2', '~> 0.5'
 gem 'puma', '~> 5.0'
