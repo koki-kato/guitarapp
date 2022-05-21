@@ -23,7 +23,7 @@
         <% if current_user.admin? %>
           <%= link_to("一覧", users_path,{class: "dropdown-item"}) %>
         <% end %>
-        <% unless current_user.name == "ゲストユーザー" %>
+        <% unless current_user.name == "ゲストユーザー" || current_user.name == current_user.image_url %>
           <%= link_to("設定", edit_user_path(current_user),{class: "dropdown-item"}) %>
         <% end %>
           <div class="dropdown-divider"></div>

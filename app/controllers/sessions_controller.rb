@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     unless params[:commit] == "ログイン"
+      
       (user = User.find_or_create_from_auth_hash(auth_hash))
       log_in user
       redirect_to root_path

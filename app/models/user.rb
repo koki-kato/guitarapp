@@ -11,14 +11,15 @@ class User < ApplicationRecord
   validates :email, presence: true, unless: :uid?, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  has_secure_password validations: false
-  validate(on: :update) do |record|
-    record.errors.add(:password, :blank) unless record.password_digest.present?
-  end
 
-  validates_length_of :password, maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, on: :update
-  validates_confirmation_of :password, allow_blank: true, on: :update
-  # validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, confirmation: true
+  has_secure_password
+  # validate(on: :update) do |record|
+  #   record.errors.add(:password, :blank) unless record.password_digest.present?
+  # end
+
+  # validates_length_of :password, maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, on: :update
+  # validates_confirmation_of :password, allow_blank: true, on: :update
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, confirmation: true
 
   # 渡された文字列のハッシュ値を返します。
   def User.digest(string)
@@ -135,6 +136,9 @@ class << self
     {
       name: auth_hash.info.name,
       email: auth_hash.info.email,
+      password: auth_hash.info.email,
+      password_confirmation: auth_hash.info.email,
+      image_url: auth_hash.info.name,
       # image: auth_hash.info.image,
     }
   end
