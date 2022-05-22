@@ -49,6 +49,7 @@ class ScoresController < ApplicationController
       flash[:success] = '新規作成に成功しました。'
       redirect_to user_scores_url
     else
+      flash[:danger] = '入力が不足しています。'
       render :new
     end
   end
