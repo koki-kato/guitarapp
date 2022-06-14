@@ -1,9 +1,10 @@
 <%= form_with(model: @score, url: user_scores_path(), method: :post, local: true) do |f| %>
+<%= render 'shared/error_messages', object: @score %>
   <%= f.label :title, class: "label-#{yield(:class_text)}" %>
   <%= f.text_field :title, class: "form-control" %>
   <%= f.label :artist, class: "label-#{yield(:class_text)}" %>
   <%= f.text_field :artist, class: "form-control" %>
   <%= f.label :capo, class: "label-#{yield(:class_text)}" %>
-   <%= f.select :capo, [["選択してください","選択してください"],["なし","なし"],["1フレット","1フレット"],["2フレット","2フレット"],["3フレット","3フレット"]], class: "form-control" %>
+  <%= f.select :capo, [["なし","なし"],["1フレット","1フレット"],["2フレット","2フレット"],["3フレット","3フレット"]], class: "form-control" %>
   <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
 <% end %>
