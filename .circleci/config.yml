@@ -3,11 +3,11 @@ jobs:
   build:
     working_directory: ~/my-app
     docker:
-      - image: circleci/ruby:2.6.3-node-browsers
+      - image: circleci/ruby:3.0.4-node-browsers
         environment:
           BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
-          BUNDLER_VERSION: 2.1.4  
+          BUNDLER_VERSION: 2.2.33  
           DATABASE_URL: postgres://postgres:password@localhost:5432/myapp_test
           RAILS_ENV: test
       - image: circleci/postgres:11-alpine
@@ -21,7 +21,7 @@ jobs:
           name: Bundler install
           command: |
             gem update --system
-            gem install bundler -v 2.1.4
+            gem install bundler -v 2.2.33
       - run:
           name: Bundle Install
           command: bundle check || bundle install
