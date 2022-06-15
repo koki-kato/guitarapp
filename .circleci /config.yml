@@ -1,58 +1,50 @@
-version: 2.1
-
-orbs:
-  ruby: circleci/ruby@1.1.2
-  node: circleci/node@2
-
-# setup
-commands:
-  setup:
-    steps:
-      - checkout
-      - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
-
+version: 2
 jobs:
   build:
+    working_directory: ~/my-app
     docker:
-      - image: circleci/ruby:2.7-node
-    steps:
-      - setup
-  test:
-    docker:
-      - image: circleci/ruby:2.7-node
-      - image: circleci/postgres:11.6-alpine
-        name: "db"
+      - image: circleci/ruby:2.6.3-node-browsers
         environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: myapp_test
-          POSTGRES_PASSWORD: ""
-    environment:
-      BUNDLE_JOBS: "4"
-      BUNDLE_RETRY: "3"
-      PGHOST: 127.0.0.1
-      PGUSER: postgres
-      PGPASSWORD: ""
-      RAILS_ENV: test
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          BUNDLER_VERSION: 2.1.4  
+          DATABASE_URL: postgres://postgres:password@localhost:5432/myapp_test
+          RAILS_ENV: test
+      - image: circleci/postgres:11-alpine
     steps:
-      - setup
+      - checkout
+      - restore_cache:
+          keys:
+            - my-app-bundle-v1-{{ checksum "Gemfile.lock" }}
+            - my-app-bundle-v1-
       - run:
-          name: rails db:migrate
-          command: bundle exec rails db:migrate
+          name: Bundler install
+          command: |
+            gem update --system
+            gem install bundler -v 2.1.4
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+      - save_cache:
+          key: my-app-bundle-v1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - restore_cache:
+          keys:
+            - rails-demo-yarn-{{ checksum "yarn.lock" }}
+            - rails-demo-yarn-
+      - run:
+          name: Yarnをinstall
+          command: yarn install --cache-folder ~/.cache/yarn
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
       - run:
           name: Database setup
-          command: bundle exec rails db:schema:load --trace
+          command: bin/rails db:create db:schema:load --trace
+      - run: bundle exec bin/webpack
       - run:
-          name: Rspec
+          name: execute rspec
           command: bundle exec rspec
-
-workflows:
-  version: 2
-  test_and_deploy:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - store_test_results:
+          path: /tmp/test-results
